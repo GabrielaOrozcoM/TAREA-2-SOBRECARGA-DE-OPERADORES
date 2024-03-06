@@ -1,0 +1,310 @@
+#include <iostream>
+
+using namespace std;
+
+
+class empleado
+{
+    private:
+
+        int ClaveEmpleado;
+        string Nombre;
+        string Domicilio;
+        float Sueldo;
+        string ReportaA;
+
+    protected:
+
+    public:
+
+        empleado()
+        {
+        ClaveEmpleado = 0;
+        Nombre = "";
+        Domicilio = "";
+        Sueldo = 0;
+        ReportaA = "";
+        }
+
+        empleado(int CLAVE, string NOMBRE, string DOMICILIO, float SUELDO, string REPORTAA)
+        {
+            ClaveEmpleado = CLAVE;
+            Nombre = NOMBRE;
+            Domicilio = DOMICILIO;
+            Sueldo = SUELDO;
+            ReportaA = REPORTAA;
+        }
+
+ //===============SOBRE CARGA
+            friend ostream& operator <<(ostream &o, empleado &e)
+            {
+                o<<"\nCLAVE: "<< e.ClaveEmpleado;//privado
+                o<<"\nNOMBRE: "<< e.Nombre;//privado
+                o<<"\nDOMICILIO: "<< e.Domicilio;//privado
+                o<<"\nSUELDO: "<< e.Sueldo;//privado
+                o<<"\nREPORTA A: "<< e.ReportaA;//privado
+            }
+            friend istream& operator >>(istream &i, empleado &e)
+            {
+                cout<<"\nCLAVE: ";
+                i>>e.ClaveEmpleado;//privado
+                cout<<"\nNOMBRE: ";
+                i>>e.Nombre;//privado
+                cout<<"\nDOMICILIO: ";
+                i>>e.Domicilio;//privado
+                cout<<"\nSUELDO: ";
+                i>>e.Sueldo;//privado
+                cout<<"\nREPORTA A: ";
+                i>>e.ReportaA;//privado
+            }
+            bool operator ==(empleado & e)
+            {
+                return Sueldo == e.Sueldo;
+            }
+
+            bool operator !=(empleado & e)
+            {
+                return (ClaveEmpleado!=e.ClaveEmpleado && Nombre!=e.Nombre && Domicilio!=e.Domicilio && Sueldo!=e.Sueldo && ReportaA!=e.ReportaA);
+            }
+            bool operator <(empleado &e) const
+            {
+                return Sueldo < e.Sueldo;
+            }
+            bool operator >(empleado &e) const
+            {
+                return Sueldo > e.Sueldo;
+            }
+
+
+        //===========FIN DE SOBRECARGA
+
+
+        //-------------------------------FUNCIONES
+         void imprimir ()
+        {
+            cout<<"\n----------DATOS----------\n"
+                <<"\nCLAVE: "<<ClaveEmpleado
+                <<"\nNOMBRE: "<<Nombre
+                <<"\nDOMICILIO: "<<Domicilio
+                <<"\nSUELDO: "<<Sueldo<<" MXN."
+                <<"\nREPORTA A: "<<ReportaA<<endl;
+                cout<<"\nPRESIONE CUALQUIER TECLA PARA CONTINUAR"<<endl;
+                system ("pause");
+        }
+        void ModificacionDomicilio(string NuevoDomicilio)
+        {
+            Domicilio = NuevoDomicilio;
+            cout<<"\n\n\nEL DOMICILIO SE HA ACTUALIZADO CON EXITO!!!";
+            cout<<"\nPRESIONE CUALQUIER TECLA PARA CONTINUAR"<<endl;
+                system ("pause");
+        }
+
+        void actualizaciondesueldito(float biyuyo)
+        {
+            float aux;
+            aux = Sueldo * biyuyo;
+            Sueldo = Sueldo + aux;
+            cout<<"\n\n\nEL SUELDO SE HA ACTUALIZADO CON EXITO!!!";
+            cout<<"\nSE HA OTORGADO UN AUMENTO DEL "<< biyuyo * 100<<"%"
+                <<"\nDANDO UN TOTAL DE "<<Sueldo<< " MXN."<<endl;
+                cout<<"\nPRESIONE CUALQUIER TECLA PARA CONTINUAR"<<endl;
+
+                system ("pause");
+        }
+        void CambiaReportaA(string NuevoReporta)
+        {
+            Domicilio = NuevoReporta;
+            cout<<"\n\n\nEL NOMBRE SE HA ACTUALIZADO CON EXITO!!!";
+            cout<<"\nPRESIONE CUALQUIER TECLA PARA CONTINUAR"<<endl;
+                system ("pause");
+        }
+        //-------------------------------FIN DE FUNCIONES
+
+};
+
+int main()
+{
+   int opc, _clave;
+    string _domicilio, _ReportaA;
+    float _sueldo;
+    empleado JefePlanta (1234, "GABRIELA SARAHI OROZCO MADRIGAL", "ISLANDIA #625", 80000.00, "FULANO DE TAL");
+    empleado JefePiso (5678, "BRAYAN MELENDEZ", "CALLE #2", 80000.00, "PERENGANO DE TAL");
+    if(JefePlanta > JefePiso)
+    {
+       cout<<"JefePlanta es MAYOR a JefePiso\n";
+    }
+    else if (JefePlanta == JefePiso)
+    {
+        cout<<"JefePlanta es IGUAL a JefePiso\n";
+    }
+    else
+    {
+        cout<<"JefePlanta es MENOR a JefePiso\n";
+    }
+
+   do
+   {
+
+       if (JefePiso != JefePlanta)
+       {
+           cout<<"\nJefe Piso NO ES IGUAL a Jefe Planta\n";
+       }
+       else
+       {
+           cout<<"\nJefe Piso ES IGUAL a Jefe Planta\n";
+       }
+       cout<<"----------BIENVENID@----------"
+        <<"\n\n----------MENU----------"
+        <<"\n1) IMPRIMIR DATOS"
+        <<"\n2) MODIFICAR DOMICILIO"
+        <<"\n3) ACTUALIZAR SUELDO"
+        <<"\n4) MODIFICAR NOMBRE DE LA PERSONA A QUIEN REPORTAN"
+        <<"\n5) SALIR"
+        <<"\n-DIGITE UNA OPCION: ";
+        cin >>opc;
+
+        switch(opc)
+        {
+
+            case 1:
+                    cout<<"INGRESE CLAVE DEL EMPLEADO PARA VISUALIZARLO: "<<endl;
+                    cin>>_clave;
+                    if (_clave == 1234 || _clave == 5678)
+                    {
+                        if (_clave == 1234)
+                        {
+                            JefePlanta.imprimir();
+                        }
+                        if (_clave == 5678)
+                        {
+                            JefePiso.imprimir();
+                        }
+                    }
+                    else
+                    {
+                         cout<<"CLAVE INCORRECTA, PRESIONE CUALQUIER TECLA PARA SER REDIRIGIDO AL MENU PRINCIPAL"<<endl;
+                         system ("pause");
+                    }
+                    break;
+
+            case 2:
+                    cout<<"INGRESE CLAVE DEL EMPLEADO PARA LA MODIFICACION DE DOMICILIO: "<<endl;
+                    cin>>_clave;
+                    if (_clave == 1234 || _clave == 5678)
+                    {
+                        if (_clave == 1234)
+                        {
+                            cout <<"MODIFICACION DEL SIGUIENTE EMPLEADO:"<<endl;
+                            JefePlanta.imprimir();
+                            cout <<"INGRESE EL NUEVO DOMICILIO: "<<endl;
+                            cin.ignore();getline(cin, _domicilio);
+                            JefePlanta.ModificacionDomicilio(_domicilio);
+                        }
+                        if (_clave == 5678)
+                        {
+                            cout <<"MODIFICACION DEL SIGUIENTE EMPLEADO:"<<endl;
+                            JefePiso.imprimir();
+                            cout <<"INGRESE EL NUEVO DOMICILIO: "<<endl;
+                            cin.ignore();getline(cin, _domicilio);
+                            JefePiso.ModificacionDomicilio(_domicilio);
+                        }
+                    }
+                    else
+                    {
+                         cout<<"CLAVE INCORRECTA, PRESEIONE CUALQUIER TECLA PARA SER REDIRIGIDO AL MENU PRINCIPAL"<<endl;
+                         system ("pause");
+                    }
+                    break;
+
+            case 3:
+                    cout<<"INGRESE CLAVE DEL EMPLEADO PARA EL INCREMENTO DE SUELDO: "<<endl;
+                    cin>>_clave;
+                    if (_clave == 1234 || _clave == 5678)
+                    {
+                        if (_clave == 1234)
+                        {
+                            cout <<"MODIFICACION DEL SALARIO DEL SIGUIENTE EMPLEADO:"<<endl;
+                            JefePlanta.imprimir();
+                            cout <<"USANDO DECIMALES INGRESE EL PORCENTAJE DE INCREMENTO A APLICAR AL SUELDO : "<<endl;
+                            cin >> _sueldo;
+                            JefePlanta.actualizaciondesueldito(_sueldo);
+
+                        }
+                        if (_clave == 5678)
+                        {
+                            cout <<"MODIFICACION DEL SALARIO DEL SIGUIENTE EMPLEADO:"<<endl;
+                            JefePiso.imprimir();
+                            cout <<"USANDO DECIMALES INGRESE EL PORCENTAJE DE INCREMENTO A APLICAR AL SUELDO : "<<endl;
+                            cin >> _sueldo;
+                            JefePiso.actualizaciondesueldito(_sueldo);
+
+                        }
+
+                    //================ COMPARACION DE SUELDO ======================
+                            if(JefePlanta > JefePiso)
+                            {
+                               cout<<"JefePlanta es gana MAS que el JefePiso\n";
+                            }
+                            else if (JefePlanta == JefePiso)
+                            {
+                                cout<<"JefePlanta gana IGUAL al JefePiso\n";
+                            }
+                            else
+                            {
+                                cout<<"JefePlanta es MENOR a JefePiso\n";
+                            }
+                    //================ COMPARACION DE SUELDO ======================
+
+                    }
+                    else
+                    {
+                         cout<<"CLAVE INCORRECTA, PRESEIONE CUALQUIER TECLA PARA SER REDIRIGIDO AL MENU PRINCIPAL"<<endl;
+                         system ("pause");
+                    }
+                    break;
+
+            case 4:
+                    system ("cls");
+                    cout<<"INGRESE CLAVE DEL EMPLEADO PARA CAMBIAR EL NOMBRE DE LA PERSONA A QUIEN REPORTA: "<<endl;
+                    cin>>_clave;
+                    if (_clave == 1234 || _clave == 5678)
+                    {
+                        if (_clave == 1234)
+                        {
+                            cout <<"MODIFICACION DEL REPORTE DEL SIGUIENTE EMPLEADO:"<<endl;
+                            JefePlanta.imprimir();
+                            cout <<"INGRESE EL NOMBRE DE LA PERSONA A QUIEN REPORTA: "<<endl;
+                            cin.ignore();getline(cin, _ReportaA);
+                            JefePlanta.CambiaReportaA(_ReportaA);
+                        }
+                        if (_clave == 5678)
+                        {
+                            cout <<"MODIFICACION DEL REPORTE DEL SIGUIENTE EMPLEADO:"<<endl;
+                            JefePiso.imprimir();
+                            cout <<"INGRESE EL NOMBRE DE LA PERSONA A QUIEN REPORTA: "<<endl;
+                            cin.ignore();getline(cin, _ReportaA);
+                            JefePiso.CambiaReportaA(_ReportaA);
+                        }
+                    }
+                    else
+                    {
+                         cout<<"CLAVE INCORRECTA, PRESEIONE CUALQUIER TECLA PARA SER REDIRIGIDO AL MENU PRINCIPAL"<<endl;
+                         system ("pause");
+                    }
+                    break;
+
+            case 5:
+                    system ("cls");
+
+                    cout<<"SALIENDO DEL PROGRAMA... PRESIONE CUALQUIER TECLA PARA SALIR"<<endl;
+                    break;
+
+            default: cout<<"OPCION INVALIDA, ESCOJA UNA OPCION DEL MENU"<< endl;
+                        system ("pause");
+
+        }
+
+   }while(opc != 5);
+
+    return 0;
+}
